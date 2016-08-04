@@ -1,4 +1,4 @@
-# CORE-SYSTEM Snappy PDF/Image Wrapper for Laravel 5 and Lumen 5.1
+# CORE-SYSTEM Snappy PDF/Image Wrapper<br /><small>Laravel 5 and Lumen 5.1</small>
 
 This package is fork for laravel-snappy package: [https://github.com/barryvdh/laravel-snappy](https://github.com/barryvdh/laravel-snappy). All credit to them ;) 
 
@@ -77,4 +77,6 @@ return [
 
 ## Usage
 
+For examples how use this package follow this link: <br />
+[https://github.com/barryvdh/laravel-snappy](https://github.com/barryvdh/laravel-snappy)
 
