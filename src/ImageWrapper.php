@@ -1,4 +1,4 @@
-<?php namespace Barryvdh\Snappy;
+<?php namespace CoreSystem\Snappy;
 
 use Illuminate\Http\Response;
 use Knp\Snappy\Image as SnappyImage;
@@ -9,11 +9,12 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  * A Laravel wrapper for SnappyImage
  *
  * @package laravel-snappy
- * @author Killian Blais
+ * @author  Killian Blais
  */
-class ImageWrapper {
+class ImageWrapper
+{
 
-	/**
+    /**
      * @var \Knp\Snappy\Image
      */
     protected $snappy;
@@ -29,7 +30,7 @@ class ImageWrapper {
      */
     public function __construct(SnappyImage $snappy)
     {
-       $this->snappy = $snappy;
+        $this->snappy = $snappy;
     }
 
     /**
@@ -39,18 +40,43 @@ class ImageWrapper {
      */
     public function snappy()
     {
-     return $this->snappy;
+        return $this->snappy;
     }
 
+    /**
+     * @param $name
+     * @param $value
+     *
+     * @return $this
+     */
     public function setOption($name, $value)
     {
         $this->snappy->setOption($name, $value);
+
         return $this;
     }
 
+    /**
+     * @param $options
+     *
+     * @return $this
+     */
     public function setOptions($options)
     {
         $this->snappy->setOptions($options);
+
+        return $this;
+    }
+
+    /**
+     * @param $folder
+     *
+     * @return $this
+     */
+    public function setTemporaryFolder($folder)
+    {
+        $this->snappy->setTemporaryFolder($folder);
+
         return $this;
     }
 
@@ -58,12 +84,14 @@ class ImageWrapper {
      * Load a HTML string
      *
      * @param string $string
+     *
      * @return static
      */
     public function loadHTML($string)
     {
-        $this->html = (string) $string;
+        $this->html = (string)$string;
         $this->file = null;
+
         return $this;
     }
 
@@ -71,19 +99,29 @@ class ImageWrapper {
      * Load a HTML file
      *
      * @param string $file
+     *
      * @return static
      */
     public function loadFile($file)
     {
         $this->html = null;
         $this->file = $file;
+
         return $this;
     }
 
-	public function loadView($view, $data = array(), $mergeData = array())
+    /**
+     * @param       $view
+     * @param array $data
+     * @param array $mergeData
+     *
+     * @return $this
+     */
+    public function loadView($view, $data = array(), $mergeData = array())
     {
         $this->html = View::make($view, $data, $mergeData)->render();
         $this->file = null;
+
         return $this;
     }
 
@@ -95,13 +133,11 @@ class ImageWrapper {
      */
     public function output()
     {
-        if ($this->html)
-        {
+        if ($this->html) {
             return $this->snappy->getOutputFromHtml($this->html, $this->options);
         }
 
-        if ($this->file)
-        {
+        if ($this->file) {
             return $this->snappy->getOutput($this->file, $this->options);
         }
 
@@ -112,17 +148,15 @@ class ImageWrapper {
      * Save the image to a file
      *
      * @param $filename
+     *
      * @return static
      */
     public function save($filename, $overwrite = false)
     {
 
-        if ($this->html)
-        {
+        if ($this->html) {
             $this->snappy->generateFromHtml($this->html, $filename, $this->options, $overwrite);
-        }
-        elseif ($this->file)
-        {
+        } elseif ($this->file) {
             $this->snappy->generate($this->file, $filename, $this->options, $overwrite);
         }
 
@@ -133,13 +167,14 @@ class ImageWrapper {
      * Make the image downloadable by the user
      *
      * @param string $filename
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function download($filename = 'image.jpg')
     {
         return new Response($this->output(), 200, array(
-            'Content-Type' => 'image/jpeg',
-            'Content-Disposition' =>  'attachment; filename="'.$filename.'"'
+            'Content-Type'        => 'image/jpeg',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
         ));
     }
 
@@ -147,15 +182,16 @@ class ImageWrapper {
      * Return a response with the image to show in the browser
      *
      * @param string $filename
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function stream($filename = 'image.jpg')
     {
-        return new StreamedResponse(function() {
+        return new StreamedResponse(function () {
             echo $this->output();
         }, 200, array(
-            'Content-Type' => 'image/jpeg',
-            'Content-Disposition' => 'inline; filename="'.$filename.'"',
+            'Content-Type'        => 'image/jpeg',
+            'Content-Disposition' => 'inline; filename="' . $filename . '"',
         ));
     }
 
@@ -168,17 +204,17 @@ class ImageWrapper {
      * ->file => loadFile
      *
      * @param string $name
-     * @param array $arguments
+     * @param array  $arguments
+     *
      * @return mixed
      */
     public function __call($name, array $arguments)
     {
         $method = 'load' . ucfirst($name);
-        if (method_exists($this, $method))
-        {
+        if (method_exists($this, $method)) {
             return call_user_func_array(array($this, $method), $arguments);
         }
 
-        return call_user_func_array (array($this->snappy, $name), $arguments);
+        return call_user_func_array(array($this->snappy, $name), $arguments);
     }
 }

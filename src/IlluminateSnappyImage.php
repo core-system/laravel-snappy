@@ -1,21 +1,27 @@
-<?php namespace Barryvdh\Snappy;
+<?php namespace CoreSystem\Snappy;
 
 use Knp\Snappy\Image;
 use Illuminate\Filesystem\Filesystem;
 
-class IlluminateSnappyImage extends Image {
+/**
+ * Class IlluminateSnappyImage
+ * @package CoreSystem\Snappy
+ */
+class IlluminateSnappyImage extends Image
+{
 
-	/**
-	 * @param \Illuminate\Filesystem\Filesystem
-     * @param string $binary
-     * @param array $options
-	 */
-	public function __construct(Filesystem $fs, $binary, array $options, array $env)
-	{
-		parent::__construct($binary, $options, $env);
+    /**
+     * @param Filesystem $fs
+     * @param string     $binary
+     * @param array      $options
+     * @param array      $env
+     */
+    public function __construct(Filesystem $fs, $binary, array $options, array $env)
+    {
+        parent::__construct($binary, $options, $env);
 
-		$this->fs = $fs;
-	}
+        $this->fs = $fs;
+    }
 
     /**
      * Wrapper for the "file_get_contents" function

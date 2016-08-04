@@ -1,29 +1,31 @@
 {
-    "name": "barryvdh/laravel-snappy",
-    "description": "Snappy PDF/Image for Laravel 4",
-    "keywords": ["laravel","snappy", "pdf", "image", "wkhtmltopdf", "wkhtmltoimage"],
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Barry vd. Heuvel",
-            "email": "barryvdh@gmail.com"
-        }
-    ],
-    "require": {
-        "php": ">=5.4.0",
-        "illuminate/support": "5.0.x|5.1.x|5.2.x",
-        "illuminate/filesystem": "5.0.x|5.1.x|5.2.x",
-        "knplabs/knp-snappy": "*"
-    },
-    "autoload": {
-        "psr-4": {
-            "Barryvdh\\Snappy\\": "src/"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.3-dev"
-        }
-    },
-    "minimum-stability": "dev"
+  "name": "core-system/laravel-snappy",
+  "description": "Snappy PDF/Image for Laravel 5 with temp folder settings",
+  "keywords": [
+    "laravel",
+    "snappy",
+    "pdf",
+    "image",
+    "wkhtmltopdf",
+    "wkhtmltoimage"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Jakub Havle",
+      "email": "kuba@havle.cz"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "illuminate/support": "5.0.x|5.1.x|5.2.x",
+    "illuminate/filesystem": "5.0.x|5.1.x|5.2.x",
+    "knplabs/knp-snappy": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "CoreSystem\\Snappy\\": "src/"
+    }
+  },
+  "minimum-stability": "dev"
 }

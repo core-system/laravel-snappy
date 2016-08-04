@@ -1,35 +1,42 @@
-<?php namespace Barryvdh\Snappy;
+<?php namespace CoreSystem\Snappy;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
-class ServiceProvider extends BaseServiceProvider {
+/**
+ * Class ServiceProvider
+ * @package CoreSystem\Snappy
+ */
+class ServiceProvider extends BaseServiceProvider
+{
 
-	/**
-	 * Indicates if loading of the provider is deferred.
-	 *
-	 * @var bool
-	 */
-	protected $defer = false;
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = false;
 
-	/**
-	 * Register the service provider.
-	 *
-	 * @return void
-	 */
-	public function register()
-    {      
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register()
+    {
         $configPath = __DIR__ . '/../config/snappy.php';
         $this->mergeConfigFrom($configPath, 'snappy');
     }
 
+    /**
+     *
+     */
     public function boot()
     {
         $configPath = __DIR__ . '/../config/snappy.php';
         $this->publishes([$configPath => config_path('snappy.php')], 'config');
-        
-        if($this->app['config']->get('snappy.pdf.enabled')){
-            $this->app['snappy.pdf'] = $this->app->share(function($app)
-            {
+
+        if ($this->app['config']->get('snappy.pdf.enabled')) {
+            $this->app['snappy.pdf'] = $this->app->share(function ($app) {
                 $binary = $app['config']->get('snappy.pdf.binary', '/usr/local/bin/wkhtmltopdf');
                 $options = $app['config']->get('snappy.pdf.options', array());
                 $env = $app['config']->get('snappy.pdf.env', array());
@@ -43,17 +50,15 @@ class ServiceProvider extends BaseServiceProvider {
                 return $snappy;
             });
 
-            $this->app['snappy.pdf.wrapper'] = $this->app->share(function($app)
-            {
+            $this->app['snappy.pdf.wrapper'] = $this->app->share(function ($app) {
                 return new PdfWrapper($app['snappy.pdf']);
             });
             $this->app->alias('snappy.pdf.wrapper', 'Barryvdh\Snappy\PdfWrapper');
         }
 
 
-        if($this->app['config']->get('snappy.image.enabled')){
-            $this->app['snappy.image'] = $this->app->share(function($app)
-            {
+        if ($this->app['config']->get('snappy.image.enabled')) {
+            $this->app['snappy.image'] = $this->app->share(function ($app) {
                 $binary = $app['config']->get('snappy.image.binary', '/usr/local/bin/wkhtmltoimage');
                 $options = $app['config']->get('snappy.image.options', array());
                 $env = $app['config']->get('snappy.image.env', array());
@@ -67,22 +72,21 @@ class ServiceProvider extends BaseServiceProvider {
                 return $image;
             });
 
-            $this->app['snappy.image.wrapper'] = $this->app->share(function($app)
-            {
+            $this->app['snappy.image.wrapper'] = $this->app->share(function ($app) {
                 return new ImageWrapper($app['snappy.image']);
             });
             $this->app->alias('snappy.image.wrapper', 'Barryvdh\Snappy\ImageWrapper');
         }
 
-	}
+    }
 
-	/**
-	 * Get the services provided by the provider.
-	 *
-	 * @return array
-	 */
-	public function provides()
-	{
-		return array('snappy.pdf', 'snappy.pdf.wrapper', 'snappy.image', 'snappy.image.wrapper');
-	}
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return array('snappy.pdf', 'snappy.pdf.wrapper', 'snappy.image', 'snappy.image.wrapper');
+    }
 }

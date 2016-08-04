@@ -1,7 +1,11 @@
-<?php namespace Barryvdh\Snappy;
+<?php namespace CoreSystem\Snappy;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
+/**
+ * Class LumenServiceProvider
+ * @package CoreSystem\Snappy
+ */
 class LumenServiceProvider extends BaseServiceProvider
 {
     /**
@@ -24,6 +28,9 @@ class LumenServiceProvider extends BaseServiceProvider
         $this->mergeConfigFrom($configPath, 'snappy');
     }
 
+    /**
+     *
+     */
     public function boot()
     {
         if ($this->app['config']->get('snappy.pdf.enabled')) {

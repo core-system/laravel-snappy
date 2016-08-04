@@ -1,9 +1,14 @@
 <?php
-namespace Barryvdh\Snappy\Facades;
+namespace CoreSystem\Snappy\Facades;
 
 use Illuminate\Support\Facades\Facade as BaseFacade;
 
-class SnappyPdf extends BaseFacade {
+/**
+ * Class SnappyPdf
+ * @package CoreSystem\Snappy\Facades
+ */
+class SnappyPdf extends BaseFacade
+{
 
     /**
      * Get the registered name of the component.
