@@ -11,12 +11,14 @@ CORE-SYSTEM Snappy PDF/Image Wrapper extends `barryvdh/laravel-snappy` and adds 
  
 ## Summary
 
+- [License](#license)
 - [Installation](#installation)
+- [Config](#config)
 - [Usage](#usage)
  
-## Licence
+## License
 
-MIT
+This Snappy Wrapper for Laravel is open-sourced software licensed under the MIT license
 
 ## Installation
 
