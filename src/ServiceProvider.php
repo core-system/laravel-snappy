@@ -51,9 +51,16 @@ class ServiceProvider extends BaseServiceProvider
             });
 
             $this->app['snappy.pdf.wrapper'] = $this->app->share(function ($app) {
-                return new PdfWrapper($app['snappy.pdf']);
+                $wrapper = new PdfWrapper($app['snappy.pdf']);
+
+                $temporaryFolder = $app['config']->get('snappy.pdf.temp-folder', null);
+                if (!is_null($temporaryFolder)) {
+                    $wrapper->setTemporaryFolder($temporaryFolder);
+                }
+
+                return $wrapper;
             });
-            $this->app->alias('snappy.pdf.wrapper', 'Barryvdh\Snappy\PdfWrapper');
+            $this->app->alias('snappy.pdf.wrapper', 'CoreSystem\Snappy\PdfWrapper');
         }
 
 
@@ -73,9 +80,16 @@ class ServiceProvider extends BaseServiceProvider
             });
 
             $this->app['snappy.image.wrapper'] = $this->app->share(function ($app) {
-                return new ImageWrapper($app['snappy.image']);
+                $wrapper = new ImageWrapper($app['snappy.image']);
+
+                $temporaryFolder = $app['config']->get('snappy.image.temp-folder', null);
+                if (!is_null($temporaryFolder)) {
+                    $wrapper->setTemporaryFolder($temporaryFolder);
+                }
+
+                return $wrapper;
             });
-            $this->app->alias('snappy.image.wrapper', 'Barryvdh\Snappy\ImageWrapper');
+            $this->app->alias('snappy.image.wrapper', 'CoreSystem\Snappy\ImageWrapper');
         }
 
     }
